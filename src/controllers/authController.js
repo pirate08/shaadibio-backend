@@ -44,10 +44,46 @@ const registerUser = asyncHandler(async (req, res) => {
       },
     });
   } else {
-    // 3. Fallback error handling
     res.status(400);
     throw new Error("Invalid user data received");
   }
 });
 
-module.exports = { registerUser };
+// --Login User Function--
+const loginUser = asyncHandler(async (req, res) => {
+  const { email, password } = req.body;
+
+  // --Validation--
+  if (!email || !password) {
+    res.status(400);
+    throw new Error("All fields are required");
+  }
+
+  //   --Find User--
+  const findUser = await User.findOne({ email });
+  if (!findUser) {
+    res.status(401);
+    throw new Error("Invalid email or password");
+  }
+
+  //   --Check password--
+  const isMatch = await findUser.comparePassword(password);
+  if (!isMatch) {
+    res.status(401);
+    throw new Error("Invalid email or password");
+  }
+
+  res.status(200).json({
+    success: true,
+    message: "Login successfully",
+    data: {
+      _id: findUser._id,
+      name: findUser.name,
+      email: findUser.email,
+      isPremium: findUser.isPremium,
+      token: generateToken(findUser._id),
+    },
+  });
+});
+
+module.exports = { registerUser, loginUser };
