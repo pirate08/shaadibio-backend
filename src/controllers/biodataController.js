@@ -33,4 +33,20 @@ const createBiodata = asyncHandler(async (req, res) => {
   });
 });
 
-module.exports = { createBiodata };
+// --Get all Biodata List--
+const getAllBiodata = asyncHandler(async (req, res) => {
+  const biodatas = await Biodata.find({ user: req.user._id })
+    .select(
+      "personal.fullName template.name isComplete downloadCount updatedAt createdAt",
+    )
+    .sort({ updatedAt: -1 });
+
+  res.status(200).json({
+    success: true,
+    message: "Fetched all biodata",
+    count: biodatas.length,
+    data: biodatas,
+  });
+});
+
+module.exports = { createBiodata, getAllBiodata };
