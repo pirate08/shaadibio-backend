@@ -69,7 +69,7 @@ const bioDataSchema = new mongoose.Schema(
       annualIncome: { type: String },
       hideIncome: { type: Boolean, default: false },
       workingCity: { type: String },
-      workingCountry: { type: string },
+      workingCountry: { type: String },
     },
 
     //   --Horoscope--

@@ -1,5 +1,5 @@
 const asyncHandler = require("express-async-handler");
-const User = require("../models/User"); // 1. Capital 'U' for the Model
+const User = require("../models/User"); //
 const generateToken = require("../utils/generateToken");
 
 // --Register User Function--

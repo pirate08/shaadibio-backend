@@ -19,8 +19,8 @@ app.use(express.urlencoded({ extended: true }));
 
 // ── Routes (will be added one by one) ──
 app.use("/api/auth", require("./src/routes/authRoutes"));
+app.use("/api/biodata", require("./src/routes/biodataRoutes"));
 // app.use('/api/user', require('./routes/userRoutes'))
-// app.use('/api/biodata', require('./routes/biodataRoutes'))
 // app.use('/api/templates', require('./routes/templateRoutes'))
 // app.use('/api/ai', require('./routes/aiRoutes'))
 // app.use('/api/pdf', require('./routes/pdfRoutes'))
