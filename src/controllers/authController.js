@@ -86,4 +86,17 @@ const loginUser = asyncHandler(async (req, res) => {
   });
 });
 
-module.exports = { registerUser, loginUser };
+// ── Get Me ──
+const getMe = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user.id).select("-password");
+  if (!user) {
+    res.status(404);
+    throw new Error("User not found");
+  }
+  res.status(200).json({
+    success: true,
+    data: user,
+  });
+});
+
+module.exports = { registerUser, loginUser, getMe };
