@@ -7,6 +7,8 @@ const {
   editBiodata,
   deleteBiodata,
   updatePrivacy,
+  getVersionHistory,
+  incrementDownload,
 } = require("../controllers/biodataController");
 const { protect } = require("../middleware/authMiddleware");
 
@@ -30,5 +32,11 @@ router.delete("/:id", deleteBiodata);
 
 // --Update Privacy setting--
 router.patch("/:id/privacy", updatePrivacy);
+
+// --Get Version history route--
+router.get("/:id/versions", getVersionHistory);
+
+// --Increment Download Route--
+router.patch("/:id/download", incrementDownload);
 
 module.exports = router;

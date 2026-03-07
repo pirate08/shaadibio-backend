@@ -183,6 +183,50 @@ const updatePrivacy = asyncHandler(async (req, res) => {
   });
 });
 
+// ── Get Version History ──
+const getVersionHistory = asyncHandler(async (req, res) => {
+  const biodata = await Biodata.findById(req.params.id).select("versions user");
+
+  if (!biodata) {
+    res.status(404);
+    throw new Error("Biodata not found");
+  }
+
+  if (biodata.user.toString() !== req.user._id.toString()) {
+    res.status(403);
+    throw new Error("Not authorized");
+  }
+
+  res.status(200).json({
+    success: true,
+    count: biodata.versions.length,
+    data: biodata.versions,
+  });
+});
+
+// ── Increment Download Count ──
+const incrementDownload = asyncHandler(async (req, res) => {
+  const biodata = await Biodata.findById(req.params.id);
+
+  if (!biodata) {
+    res.status(404);
+    throw new Error("Biodata not found");
+  }
+
+  biodata.downloadCount += 1;
+  await biodata.save();
+
+  // Also increment on User model
+  await require("../models/User").findByIdAndUpdate(req.user._id, {
+    $inc: { downloadCount: 1 },
+  });
+
+  res.status(200).json({
+    success: true,
+    message: "Download count updated",
+  });
+});
+
 module.exports = {
   createBiodata,
   getAllBiodata,
@@ -190,4 +234,6 @@ module.exports = {
   editBiodata,
   deleteBiodata,
   updatePrivacy,
+  getVersionHistory,
+  incrementDownload,
 };
