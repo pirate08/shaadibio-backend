@@ -49,4 +49,26 @@ const getAllBiodata = asyncHandler(async (req, res) => {
   });
 });
 
-module.exports = { createBiodata, getAllBiodata };
+// --Get single biodata by ID--
+const getSingleBiodata = asyncHandler(async (req, res) => {
+  const biodata = await Biodata.findById(req.params.id);
+
+  if (!biodata) {
+    res.status(404);
+    throw new Error("Biodata not found");
+  }
+
+  // --Check biodata ownership--
+  if (biodata.user.toString() !== req.user._id.toString()) {
+    res.status(403);
+    throw new Error("Unauthorized access to this biodata");
+  }
+
+  res.status(200).json({
+    success: true,
+    message: "Fetched biodata details",
+    data: biodata,
+  });
+});
+
+module.exports = { createBiodata, getAllBiodata, getSingleBiodata };
