@@ -81,7 +81,7 @@ const editBiodata = asyncHandler(async (req, res) => {
   }
 
   // --Check biodata ownership--
-  if (biodata.user.toString() !== req.user.id.toString()) {
+  if (biodata.user.toString() !== req.user._id.toString()) {
     res.status(403);
     throw new Error("Unauthorized access to this biodata");
   }
@@ -131,9 +131,33 @@ const editBiodata = asyncHandler(async (req, res) => {
   });
 });
 
+// --Delete Biodata--
+const deleteBiodata = asyncHandler(async (req, res) => {
+  const biodata = await Biodata.findById(req.params.id);
+
+  if (!biodata) {
+    res.status(404);
+    throw new Error("Biodata not found");
+  }
+
+  // --Chech the ownership--
+  if (biodata.user.toString() !== req.user._id.toString()) {
+    res.status(403);
+    throw new Error("Unauthorized access to this biodata");
+  }
+
+  await biodata.deleteOne();
+
+  res.status(200).json({
+    success: true,
+    message: "Biodata deleted successfully",
+  });
+});
+
 module.exports = {
   createBiodata,
   getAllBiodata,
   getSingleBiodata,
   editBiodata,
+  deleteBiodata,
 };

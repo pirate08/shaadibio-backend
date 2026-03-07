@@ -5,6 +5,7 @@ const {
   getAllBiodata,
   getSingleBiodata,
   editBiodata,
+  deleteBiodata,
 } = require("../controllers/biodataController");
 const { protect } = require("../middleware/authMiddleware");
 
@@ -22,5 +23,8 @@ router.get("/:id", getSingleBiodata);
 
 // --Edit biodata details--
 router.patch("/:id", editBiodata);
+
+// --Delete biodata--
+router.delete("/:id", deleteBiodata);
 
 module.exports = router;
