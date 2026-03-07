@@ -154,10 +154,40 @@ const deleteBiodata = asyncHandler(async (req, res) => {
   });
 });
 
+// --Update Privacy Setting--
+const updatePrivacy = asyncHandler(async (req, res) => {
+  const { hideContact, hideIncome } = req.body;
+
+  const biodata = await Biodata.findById(req.params.id);
+
+  if (!biodata) {
+    res.status(404);
+    throw new Error("Biodata not found");
+  }
+
+  // --Check the ownership--
+  if (biodata.user.toString() !== req.user._id.toString()) {
+    res.status(403);
+    throw new Error("Unauthorized access to this biodata");
+  }
+
+  biodata.privacy.hideContact = hideContact ?? biodata.privacy.hideContact;
+  biodata.privacy.hideIncome = hideIncome ?? biodata.privacy.hideIncome;
+
+  await biodata.save();
+
+  res.status(200).json({
+    success: true,
+    message: "Privacy settings updated",
+    data: biodata.privacy,
+  });
+});
+
 module.exports = {
   createBiodata,
   getAllBiodata,
   getSingleBiodata,
   editBiodata,
   deleteBiodata,
+  updatePrivacy,
 };

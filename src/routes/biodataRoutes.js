@@ -6,6 +6,7 @@ const {
   getSingleBiodata,
   editBiodata,
   deleteBiodata,
+  updatePrivacy,
 } = require("../controllers/biodataController");
 const { protect } = require("../middleware/authMiddleware");
 
@@ -26,5 +27,8 @@ router.patch("/:id", editBiodata);
 
 // --Delete biodata--
 router.delete("/:id", deleteBiodata);
+
+// --Update Privacy setting--
+router.patch("/:id/privacy", updatePrivacy);
 
 module.exports = router;
