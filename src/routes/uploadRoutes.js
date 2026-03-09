@@ -1,11 +1,14 @@
 const express = require("express");
 const { protect } = require("../middleware/authMiddleware");
-const { uploadPhoto } = require("../controllers/uploadController");
+const { uploadPhoto, deletePhoto } = require("../controllers/uploadController");
 const { upload } = require("../config/cloudinary");
 
 const router = express.Router();
 
-// --Upload photo — with or without biodataId--
+// --Upload photo--
 router.post("/photo/:biodataId", protect, upload.single("photo"), uploadPhoto);
+
+// --Delete photo--
+router.delete("/photo/:biodataId", protect, deletePhoto);
 
 module.exports = router;
