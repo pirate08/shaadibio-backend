@@ -16,3 +16,21 @@ const buildBioPrompt = ({ name, profession, education, religion, city }) => {
     - Mention values, personality and what they are looking for in a partner.
     - Do not add any heading or label, just the paragraph`;
 };
+
+// --Horoscope Summary Prompt--
+const horoscopePrompt = ({ rashi, nakshatra, gotra, mangalik }) => {
+  return `Write a short horoscope personality and compatibility summary for a marriage biodata.
+    Details: 
+    - Rashi (Moon Sign): ${rashi},
+    - Nakshatra: ${nakshatra},
+    - Gotro: ${gotro},
+    - Mangalik: ${mangalik} 
+    
+    Instructions:
+    - Keep it between 4 to 5 sentences
+    - Mention personality traits associated with this Rashi and Nakshatra.
+    - Mention compatibility note based on Manglik status.
+    - Keep the tone positive and informative.
+    - Add information according to the gotro given.
+    - Do not add any heading or label, just the paragraph. `;
+};
