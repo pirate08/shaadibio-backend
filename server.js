@@ -20,12 +20,12 @@ app.use(express.urlencoded({ extended: true }));
 // ── Routes (will be added one by one) ──
 app.use("/api/auth", require("./src/routes/authRoutes"));
 app.use("/api/biodata", require("./src/routes/biodataRoutes"));
+app.use("/api/stats", require("./src/routes/statsRoutes"));
 // app.use('/api/user', require('./routes/userRoutes'))
 // app.use('/api/templates', require('./routes/templateRoutes'))
 // app.use('/api/ai', require('./routes/aiRoutes'))
 // app.use('/api/pdf', require('./routes/pdfRoutes'))
 // app.use('/api/upload', require('./routes/uploadRoutes'))
-// app.use('/api/stats', require('./routes/statsRoutes'))
 // app.use('/api/admin', require('./routes/adminRoutes'))
 
 // ── Health Check ──
