@@ -18,6 +18,9 @@ const generatePDF = asyncHandler(async (req, res) => {
     res.status(403);
     throw new Error("Not authorized");
   }
+
+  const user = await User.findById(req.user._id).select("isPremium");
+  const html = buildBiodataHTML(biodata, user.isPremium, biodata.template);
 });
 
 module.exports = { generatePDF };
