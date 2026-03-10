@@ -27,6 +27,20 @@ const generatePDF = asyncHandler(async (req, res) => {
     headless: "new",
     args: ["--no-sandbox", "--disable-setuid-sandbox"],
   });
+
+  const page = await browser.newPage();
+  l;
+  await page.setContent(html, { waitUntil: "networkidle0" });
+
+  //   --Generate and save the PDF locally--
+  const pdfBuffer = await page.pdf({
+    format: "A4",
+    printBackground: true,
+    margin: { top: "20px", bottom: "20px", left: "20px", right: "20px" },
+  });
+
+  // --Close the browser--
+  await browser.close();
 });
 
 module.exports = { generatePDF };
