@@ -37,4 +37,32 @@ const generateBio = asyncHandler(async (req, res) => {
   });
 });
 
-module.exports = { generateBio };
+// --Generate Horoscope Summary--
+const generateHoroscope = asyncHandler(async (req, res) => {
+  const { rashi, nakshatra, gotra, mangalik } = req.body;
+
+  if (!rashi || !nakshatra) {
+    res.status(400);
+    throw new Error("Rashi and Nakshatra are required fields.");
+  }
+
+  const prompt = horoscopePrompt({ rashi, nakshatra, gotra, mangalik });
+
+  const result = await model.generateContent(prompt);
+  const summary = result.response.text().trim();
+
+  if (!summary) {
+    res.status(500);
+    throw new Error(
+      "AI failed to generate a horoscope summary. Please try again.",
+    );
+  }
+
+  res.status(200).json({
+    success: true,
+    message: "Horoscope summarized successfully",
+    data: { summary },
+  });
+});
+
+module.exports = { generateBio, generateHoroscope };
