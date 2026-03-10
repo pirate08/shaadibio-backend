@@ -22,9 +22,9 @@ app.use("/api/auth", require("./src/routes/authRoutes"));
 app.use("/api/biodata", require("./src/routes/biodataRoutes"));
 app.use("/api/stats", require("./src/routes/statsRoutes"));
 app.use("/api/upload", require("./src/routes/uploadRoutes"));
+app.use("/api/ai", require("./src/routes/aiRoutes"));
 // app.use('/api/user', require('./routes/userRoutes'))
 // app.use('/api/templates', require('./routes/templateRoutes'))
-// app.use('/api/ai', require('./routes/aiRoutes'))
 // app.use('/api/pdf', require('./routes/pdfRoutes'))
 // app.use('/api/admin', require('./routes/adminRoutes'))
 

@@ -23,7 +23,7 @@ const horoscopePrompt = ({ rashi, nakshatra, gotra, mangalik }) => {
     Details: 
     - Rashi (Moon Sign): ${rashi},
     - Nakshatra: ${nakshatra},
-    - Gotro: ${gotro},
+    - Gotra: ${gotra},
     - Mangalik: ${mangalik} 
     
     Instructions:
@@ -34,3 +34,5 @@ const horoscopePrompt = ({ rashi, nakshatra, gotra, mangalik }) => {
     - Add information according to the gotro given.
     - Do not add any heading or label, just the paragraph. `;
 };
+
+module.exports = { buildBioPrompt, horoscopePrompt };
