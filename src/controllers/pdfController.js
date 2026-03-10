@@ -41,6 +41,20 @@ const generatePDF = asyncHandler(async (req, res) => {
 
   // --Close the browser--
   await browser.close();
+
+  // Increment download count
+  biodata.downloadCount += 1;
+  await biodata.save();
+  await User.findByIdAndUpdate(req.user._id, { $inc: { downloadCount: 1 } });
+
+  // Send PDF as response
+  res.set({
+    "Content-Type": "application/pdf",
+    "Content-Disposition": `attachment; filename="shaadibio-${biodata.personal?.fullName || "biodata"}.pdf"`,
+    "Content-Length": pdfBuffer.length,
+  });
+
+  res.send(pdfBuffer);
 });
 
 module.exports = { generatePDF };
