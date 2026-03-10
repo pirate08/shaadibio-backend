@@ -29,7 +29,6 @@ const generatePDF = asyncHandler(async (req, res) => {
   });
 
   const page = await browser.newPage();
-  l;
   await page.setContent(html, { waitUntil: "networkidle0" });
 
   //   --Generate and save the PDF locally--
