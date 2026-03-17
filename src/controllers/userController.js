@@ -50,6 +50,19 @@ const updateUserProfile = asyncHandler(async (req, res) => {
   }
 
   if (name) user.name = name;
+
+  const updated = await user.save();
+
+  res.status(200).json({
+    success: true,
+    message: "Profile updated successfullyl...",
+    data: {
+      _id: updated._id,
+      name: updated.name,
+      email: updated.email,
+      isPremium: updated.isPremium,
+    },
+  });
 });
 
 module.exports = { getUserProfile };
