@@ -80,6 +80,18 @@ const changePassword = asyncHandler(async (req, res) => {
   }
 
   const user = await User.findById(req.user.id);
+
+  //   --Check if currentPassword matches--
+  const isMatch = await user.matchPassword(currentPassword);
+
+  if (!isMatch) {
+    res.status(401);
+    throw new Error("Password doesnot match");
+  }
+
+  // Set new password — pre-save hook will hash it
+  user.password = newPassword;
+  await user.save();
 });
 
 module.exports = { getUserProfile, updateUserProfile };
