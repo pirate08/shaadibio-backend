@@ -11,4 +11,10 @@ const getUserProfile = asyncHandler(async (req, res) => {
     res.status(404);
     throw new Error("User account not found");
   }
+
+  res.status(200).json({
+    success: true,
+    message: "User profile fetched",
+    data: user,
+  });
 });
