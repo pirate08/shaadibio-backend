@@ -18,3 +18,5 @@ const getUserProfile = asyncHandler(async (req, res) => {
     data: user,
   });
 });
+
+module.exports = { getUserProfile };
