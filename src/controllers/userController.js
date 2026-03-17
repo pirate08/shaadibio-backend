@@ -103,24 +103,37 @@ const changePassword = asyncHandler(async (req, res) => {
 const deleteProfile = asyncHandler(async (req, res) => {
   const userId = req.user._id;
 
-  //   --Find all biodatas under this id--
+  // 1. Find all biodatas to get photo references
   const biodatas = await Biodata.find({ user: userId });
 
-  // --Delete all photos from Cloudinary--
-  for (const biodata of biodatas) {
-    if (biodata.photo?.publicId) {
-      await cloudinary.uploader.destroy(biodata.photo?.publicId);
+  // 2. Delete all photos from Cloudinary
+  // Using Promise.all is faster than a 'for' loop for multiple images
+  const photoDeletions = biodatas.map(async (doc) => {
+    if (doc.photo?.publicId) {
+      try {
+        await cloudinary.uploader.destroy(doc.photo.publicId);
+      } catch (err) {
+        console.error(`Cloudinary Delete Error: ${doc.photo.publicId}`, err);
+      }
     }
-  }
+  });
 
+  await Promise.all(photoDeletions);
+
+  // 3. Delete all associated Biodata records
   await Biodata.deleteMany({ user: userId });
 
-  //   --Delete userid--
-  await User.findByIdAndDelete(userId);
+  // 4. Delete the User account
+  const deletedUser = await User.findByIdAndDelete(userId);
+
+  if (!deletedUser) {
+    res.status(404);
+    throw new Error("User not found");
+  }
 
   res.status(200).json({
     success: true,
-    message: "Account Deleted Successfully",
+    message: "Account and all associated data deleted successfully",
   });
 });
 

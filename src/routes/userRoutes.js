@@ -4,6 +4,7 @@ const {
   getUserProfile,
   updateUserProfile,
   changePassword,
+  deleteProfile,
 } = require("../controllers/userController");
 
 const router = express.Router();
@@ -16,5 +17,8 @@ router.patch("/update-profile", protect, updateUserProfile);
 
 // --Change password Route--
 router.patch("/change-password", protect, changePassword);
+
+// --Delete User profile Route--
+router.delete("/delete-profile", protect, deleteProfile);
 
 module.exports = router;
