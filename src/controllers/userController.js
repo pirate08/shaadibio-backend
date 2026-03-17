@@ -101,12 +101,22 @@ const changePassword = asyncHandler(async (req, res) => {
 
 // --Delete Profile account--
 const deleteProfile = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.user._id);
+  const userId = req.user._id;
 
-  if (!user) {
-    res.status(404);
-    throw new Error("User not found");
+  //   --Find all biodatas under this id--
+  const biodatas = await Biodata.find({ user: userId });
+
+  // --Delete all photos from Cloudinary--
+  for (const biodata of biodatas) {
+    if (biodata.photo?.publicId) {
+      await cloudinary.uploader.destroy(biodata.photo?.publicId);
+    }
   }
+
+  await Biodata.deleteMany({ user: userId });
+
+  //   --Delete userid--
+  await User.findByIdAndDelete(userId);
 });
 
 module.exports = { getUserProfile, updateUserProfile, changePassword };
