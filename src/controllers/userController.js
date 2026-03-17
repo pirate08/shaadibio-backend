@@ -19,4 +19,9 @@ const getUserProfile = asyncHandler(async (req, res) => {
   });
 });
 
+// --Update User Profile--
+const updateUserProfile = asyncHandler(async (req, res) => {
+  const { name, email } = req.body;
+});
+
 module.exports = { getUserProfile };
