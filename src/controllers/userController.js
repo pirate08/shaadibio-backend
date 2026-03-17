@@ -32,11 +32,6 @@ const updateUserProfile = asyncHandler(async (req, res) => {
   }
 
   //   --Validation--
-  if (!name && !email) {
-    res.status(400);
-    throw new Error("Name and email both are required fields.");
-  }
-
   //   --Check if the new email has been taken--
   if (email && email !== user.email) {
     const emailExists = await User.findOne({ email });
@@ -63,6 +58,28 @@ const updateUserProfile = asyncHandler(async (req, res) => {
       isPremium: updated.isPremium,
     },
   });
+});
+
+// --Change Password--
+const changePassword = asyncHandler(async (req, res) => {
+  const { currentPassword, newPassword, confirmNewPassword } = req.body;
+
+  if (!currentPassword || newPassword || confirmNewPassword) {
+    res.status(400);
+    throw new Error("All fields are required.");
+  }
+
+  if (newPassword.length < 6) {
+    res.status(400);
+    throw new Error("New password consists at least 6 characters. ");
+  }
+
+  if (newPassword !== confirmNewPassword) {
+    res.status(400);
+    throw new Error("New password and ConfirmPassword must match.");
+  }
+
+  const user = await User.findById(req.user.id);
 });
 
 module.exports = { getUserProfile, updateUserProfile };
