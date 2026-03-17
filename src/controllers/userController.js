@@ -117,6 +117,16 @@ const deleteProfile = asyncHandler(async (req, res) => {
 
   //   --Delete userid--
   await User.findByIdAndDelete(userId);
+
+  res.status(200).json({
+    success: true,
+    message: "Account Deleted Successfully",
+  });
 });
 
-module.exports = { getUserProfile, updateUserProfile, changePassword };
+module.exports = {
+  getUserProfile,
+  updateUserProfile,
+  changePassword,
+  deleteProfile,
+};
