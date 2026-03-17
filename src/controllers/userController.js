@@ -22,6 +22,34 @@ const getUserProfile = asyncHandler(async (req, res) => {
 // --Update User Profile--
 const updateUserProfile = asyncHandler(async (req, res) => {
   const { name, email } = req.body;
+
+  const user = await User.findById(req.user._id);
+
+  // --Check User Exsitence--
+  if (!user) {
+    res.status(404);
+    throw new Error("User not exists");
+  }
+
+  //   --Validation--
+  if (!name && !email) {
+    res.status(400);
+    throw new Error("Name and email both are required fields.");
+  }
+
+  //   --Check if the new email has been taken--
+  if (email && email !== user.email) {
+    const emailExists = await User.findOne({ email });
+
+    if (emailExists) {
+      res.status(400);
+      throw new Error("Email already in use");
+    }
+
+    user.email = email;
+  }
+
+  if (name) user.name = name;
 });
 
 module.exports = { getUserProfile };
