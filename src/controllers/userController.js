@@ -99,4 +99,14 @@ const changePassword = asyncHandler(async (req, res) => {
   });
 });
 
+// --Delete Profile account--
+const deleteProfile = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id);
+
+  if (!user) {
+    res.status(404);
+    throw new Error("User not found");
+  }
+});
+
 module.exports = { getUserProfile, updateUserProfile, changePassword };
