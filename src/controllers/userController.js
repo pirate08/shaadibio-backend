@@ -92,6 +92,11 @@ const changePassword = asyncHandler(async (req, res) => {
   // Set new password — pre-save hook will hash it
   user.password = newPassword;
   await user.save();
+
+  res.status(200).json({
+    success: true,
+    message: "Password changed successfully...",
+  });
 });
 
-module.exports = { getUserProfile, updateUserProfile };
+module.exports = { getUserProfile, updateUserProfile, changePassword };
