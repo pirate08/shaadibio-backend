@@ -64,7 +64,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 const changePassword = asyncHandler(async (req, res) => {
   const { currentPassword, newPassword, confirmNewPassword } = req.body;
 
-  if (!currentPassword || newPassword || confirmNewPassword) {
+  if (!currentPassword || !newPassword || !confirmNewPassword) {
     res.status(400);
     throw new Error("All fields are required.");
   }
@@ -82,11 +82,11 @@ const changePassword = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user.id);
 
   //   --Check if currentPassword matches--
-  const isMatch = await user.matchPassword(currentPassword);
+  const isMatch = await user.comparePassword(currentPassword);
 
   if (!isMatch) {
     res.status(401);
-    throw new Error("Password doesnot match");
+    throw new Error("Current Password doesnot match");
   }
 
   // Set new password — pre-save hook will hash it
