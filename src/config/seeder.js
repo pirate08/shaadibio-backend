@@ -1,7 +1,7 @@
 require("dotenv").config();
 const mongoose = require("mongoose");
-const connectDB = require("./db");
 const Template = require("../models/Template");
+const connectDb = require("./db");
 
 const templates = [
   {
@@ -36,3 +36,23 @@ const templates = [
     isActive: true,
   },
 ];
+
+const seedTemplates = async () => {
+  try {
+    await connectDb();
+    // --Delete existing templates--
+    await Template.deleteMany();
+    console.log("Deleting Existing Template stored in database.");
+
+    // --Insert new templates--
+    await Template.insertMany(templates);
+    console.log("Templates seeded successfully");
+
+    process.exit();
+  } catch (error) {
+    console.log(`Seeder Error ${error.message}`);
+    process.exit(1);
+  }
+};
+
+seedTemplates();
