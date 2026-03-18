@@ -17,4 +17,14 @@ const getAllTemplates = asyncHandler(async (req, res) => {
   });
 });
 
+// --Get single template--
+const getSingleTemplate = asyncHandler(async (req, res) => {
+  const singleTemplate = await Template.findById(req.params.id);
+
+  if (!singleTemplate) {
+    res.status(404);
+    throw new Error("Template not found");
+  }
+});
+
 module.exports = { getAllTemplates };
