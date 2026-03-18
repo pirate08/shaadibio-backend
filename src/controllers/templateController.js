@@ -54,9 +54,9 @@ const applyTemplate = asyncHandler(async (req, res) => {
     throw new Error("Not authorized.");
   }
 
-  biodata.template.name === name;
-  biodata.template.font === font || biodata.template.font;
-  biodata.template.color === color || biodata.template.color;
+  biodata.template.name = name;
+  biodata.template.font = font || biodata.template.font;
+  biodata.template.color = color || biodata.template.color;
 
   await biodata.save();
 
