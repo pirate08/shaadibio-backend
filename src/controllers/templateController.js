@@ -33,4 +33,14 @@ const getSingleTemplate = asyncHandler(async (req, res) => {
   });
 });
 
+// --Apply Template to Biodata--
+const applyTemplate = asyncHandler(async (req, res) => {
+  const { name, font, color } = req.body;
+
+  if (!name) {
+    res.status(400);
+    throw new Error("Template name is required.");
+  }
+});
+
 module.exports = { getAllTemplates, getSingleTemplate };
