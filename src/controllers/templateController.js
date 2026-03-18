@@ -25,6 +25,12 @@ const getSingleTemplate = asyncHandler(async (req, res) => {
     res.status(404);
     throw new Error("Template not found");
   }
+
+  res.status(200).json({
+    success: true,
+    message: "Single Template fetched.",
+    data: singleTemplate,
+  });
 });
 
-module.exports = { getAllTemplates };
+module.exports = { getAllTemplates, getSingleTemplate };
