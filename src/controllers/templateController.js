@@ -46,8 +46,25 @@ const applyTemplate = asyncHandler(async (req, res) => {
 
   if (!biodata) {
     res.status(404);
-    throw new Error("Biodata not found");
+    throw new Error("Biodata not found.");
   }
+
+  if (biodata.user.toString() !== req.user._id.toString()) {
+    res.status(403);
+    throw new Error("Not authorized.");
+  }
+
+  biodata.template.name === name;
+  biodata.template.font === font || biodata.template.font;
+  biodata.template.color === color || biodata.template.color;
+
+  await biodata.save();
+
+  res.status(200).json({
+    success: true,
+    message: "Template applied successfully",
+    data: biodata.template,
+  });
 });
 
-module.exports = { getAllTemplates, getSingleTemplate };
+module.exports = { getAllTemplates, getSingleTemplate, applyTemplate };
