@@ -25,4 +25,14 @@ const templates = [
     colorOptions: ["#1A3A8B", "#8B1A4A", "#0D6E6E", "#4A1A8B", "#1A5C1A"],
     isActive: true,
   },
+  {
+    name: "minimal",
+    label: "Minimal",
+    description: "Simple and elegant design with clean typography",
+    category: "Minimal",
+    defaultFont: "helvetica",
+    defaultColor: "#2D2D2D",
+    colorOptions: ["#2D2D2D", "#8B1A4A", "#1A3A8B", "#1A6B3A", "#6B4A1A"],
+    isActive: true,
+  },
 ];
