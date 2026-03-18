@@ -25,7 +25,7 @@ app.use("/api/upload", require("./src/routes/uploadRoutes"));
 app.use("/api/ai", require("./src/routes/aiRoutes"));
 app.use("/api/pdf", require("./src/routes/pdfRoutes"));
 app.use("/api/user", require("./src/routes/userRoutes"));
-// app.use('/api/templates', require('./routes/templateRoutes'))
+app.use("/api/templates", require("./src/routes/templateRoutes"));
 // app.use('/api/admin', require('./routes/adminRoutes'))
 
 // ── Health Check ──
