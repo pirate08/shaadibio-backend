@@ -41,6 +41,13 @@ const applyTemplate = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error("Template name is required.");
   }
+
+  const biodata = await Biodata.findById(req.params.biodataId);
+
+  if (!biodata) {
+    res.status(404);
+    throw new Error("Biodata not found");
+  }
 });
 
 module.exports = { getAllTemplates, getSingleTemplate };
